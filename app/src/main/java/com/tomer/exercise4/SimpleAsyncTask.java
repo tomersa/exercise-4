@@ -1,33 +1,20 @@
 package com.tomer.exercise4;
 
-import android.os.AsyncTask;
+public abstract class SimpleAsyncTask<Param> {
 
-public abstract class SimpleAsyncTask extends AsyncTask<Void, Void, Void> {
+    protected boolean cancelled = false;
 
-    private boolean cancelled = false;
+    abstract protected void doInBackground();
 
-    @Override
-    protected Void doInBackground(Void... voids) {
-        return null;
+    abstract protected void onPreExecute();
+
+    protected void onPostExecute() {
+        publishProgress();
     }
 
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-    }
+    protected void onProgressUpdate() {}
 
-    @Override
-    protected void onPostExecute(Void aVoid) {
-        super.onPostExecute(aVoid);
-    }
+    abstract protected void onCancelled();
 
-    @Override
-    protected void onProgressUpdate(Void... values) {
-        super.onProgressUpdate(values);
-    }
-
-    @Override
-    protected void onCancelled() {
-        super.onCancelled();
-    }
+    abstract protected void publishProgress(final Param... values);
 }

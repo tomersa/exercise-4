@@ -76,4 +76,6 @@ public class AsyncTaskActivity extends AppCompatActivity implements IAsyncTaskEv
             }
         });
     }
+
+
 }
