@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="threads_button_color">#6E3093</color>
     <color name="async_task_button_color">#07AFB9</color>
+    <color name="terminal_color">#07AFB9</color>
 </resources>
