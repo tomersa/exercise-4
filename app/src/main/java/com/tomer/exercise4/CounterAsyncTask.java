@@ -40,6 +40,10 @@ public class CounterAsyncTask extends AsyncTask<IAsyncTaskEvents, Integer, Void>
         public synchronized void start() {
             super.start();
             for(int i = 0; i < 10; i++) {
+                if(isCancelled()) {
+                    break;
+                }
+
                 Integer[] progress = new Integer[1];
                 progress[0] = i;
                 publishProgress(progress);

@@ -37,7 +37,10 @@ public class AsyncTaskActivity extends AppCompatActivity implements IAsyncTaskEv
                 if(currentTask != null) {
                     IAsyncTaskEvents[] events = new IAsyncTaskEvents[1];
                     events[0] = AsyncTaskActivity.this;
-                    currentTask.execute(events);
+
+                    if(!currentTask.isCancelled()) {
+                        currentTask.execute(events);
+                    }
                 }
             }
         });
@@ -45,8 +48,10 @@ public class AsyncTaskActivity extends AppCompatActivity implements IAsyncTaskEv
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                currentTask.cancel(true);
-                currentTask = new CounterAsyncTask();
+                if (currentTask != null) {
+                    currentTask.cancel(true);
+                    currentTask = new CounterAsyncTask();
+                }
             }
         });
     }
