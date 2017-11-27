@@ -3,4 +3,6 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="threads_button_color">#6E3093</color>
+    <color name="async_task_button_color">#07AFB9</color>
 </resources>
