@@ -35,7 +35,9 @@ public class AsyncTaskActivity extends AppCompatActivity implements IAsyncTaskEv
             @Override
             public void onClick(View view) {
                 if(currentTask != null) {
-                    currentTask.doInBackground();
+                    IAsyncTaskEvents[] events = new IAsyncTaskEvents[1];
+                    events[0] = AsyncTaskActivity.this;
+                    currentTask.execute(events);
                 }
             }
         });
@@ -51,12 +53,22 @@ public class AsyncTaskActivity extends AppCompatActivity implements IAsyncTaskEv
 
     @Override
     public void onPostExecute() {
-        terminalTextView.setText(Resources.getSystem().getText(R.string.terminal_finished));
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                terminalTextView.setText(R.string.terminal_finished);
+            }
+        });
         currentTask = new CounterAsyncTask();
     }
 
     @Override
-    public void onProgressUpdate(Integer count) {
-        terminalTextView.setText(Resources.getSystem().getText(count));
+    public void onProgressUpdate(final Integer count) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                terminalTextView.setText(Integer.toString(count));
+            }
+        });
     }
 }

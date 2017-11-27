@@ -20,12 +20,29 @@ public class CounterAsyncTask extends AsyncTask<IAsyncTaskEvents, Integer, Void>
         return null;
     }
 
+    @Override
+    protected void onProgressUpdate(Integer... values) {
+        super.onProgressUpdate(values);
+
+        if(values.length > 0) {
+            asyncEvent.onProgressUpdate(values[0]);
+        }
+    }
+
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
+        asyncEvent.onPostExecute();
+    }
+
     private class WorkerThread extends Thread {
         @Override
         public synchronized void start() {
             super.start();
             for(int i = 0; i < 10; i++) {
-                asyncEvent.onProgressUpdate(i);
+                Integer[] progress = new Integer[1];
+                progress[0] = i;
+                publishProgress(progress);
 
                 try {
                     Thread.sleep(500);
@@ -33,8 +50,6 @@ public class CounterAsyncTask extends AsyncTask<IAsyncTaskEvents, Integer, Void>
                     e.printStackTrace();
                 }
             }
-
-            asyncEvent.onPostExecute();
         }
     }
 }
